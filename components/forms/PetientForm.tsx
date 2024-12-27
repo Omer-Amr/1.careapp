@@ -48,7 +48,7 @@ const  PatientForm = () => {
 
       const user = await createUser(userData);
 
-      if(user) router.push('/patients/${user.$id}/register')
+      if(user) router.push(`/patients/${user.$id}/register`)
 
     } catch (error) {
       console.log(error);
@@ -85,7 +85,7 @@ const  PatientForm = () => {
       <CustomFormField 
         fieldType={FormFieldType.PHONE_INPUT}
         control={form.control}
-        name="Phone"
+        name="phone"
         label="Phone number"
         placeholder="+963 932 456 789"
         
