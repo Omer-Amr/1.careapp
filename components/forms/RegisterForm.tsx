@@ -108,12 +108,12 @@ const  RegisterForm = ({user}: { user: User }) => {
                     <RadioGroup 
                     className="flex h-11 gap-6 xl:justify-between"
                     onValueChange={field.onChange}
-                    defaultValue={field.value}
+                    value={field.value}
                     >
                         {GenderOptions.map((option) => (
-                          <div key={option} className="radio-group">
-                            <RadioGroupItem value={option} id={option} />
-                            <Label htmlFor={option} className="cursor-pointer">
+                          <div key={option} className="flex h-11 gap-6 xl:justify-between">
+                            <RadioGroupItem value={option} id={option} className="aspect-square h-4 w-4 rounded-full border border-primary text-primary data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground" />
+                            <Label htmlFor={option} className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer">
                                 {option}
                             </Label>
                           </div>
