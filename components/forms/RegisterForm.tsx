@@ -14,10 +14,13 @@ import { useRouter } from "next/navigation"
 import { createUser } from "@/lib/actions/patient.actions"
 import { FormFieldType } from "./PetientForm"
 import { RadioGroup, RadioGroupItem } from "@radix-ui/react-radio-group"
-import { GenderOptions } from "@/constants"
+import { Doctors, GenderOptions, IdentificationTypes } from "@/constants"
 import { Label } from "@radix-ui/react-label"
+import { SelectItem } from "../ui/select"
+import Image from "next/image"
+import FileUploader from "../FileUploader"
 
- 
+
 const  RegisterForm = ({user}: { user: User }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState (false);
@@ -124,6 +127,183 @@ const  RegisterForm = ({user}: { user: User }) => {
             
         />
       </div>
+
+      <div className="flex flex-col gap-6 xl:flex-row">
+        <CustomFormField 
+            fieldType={FormFieldType.INPUT}
+            control={form.control}
+            name="address"
+            label="Address"
+            placeholder="Ex: Bab sharqie, Damascus"
+        />
+        </div>
+
+      <div className="flex flex-col gap-6 xl:flex-row">
+        <CustomFormField 
+            fieldType={FormFieldType.INPUT}
+            control={form.control}
+            name="occupation"
+            label="Occupation"
+            placeholder="Ex: Freelancer"
+        />
+        </div>
+
+        <div className="flex flex-col gap-6 xl:flex-row">
+        <CustomFormField 
+            fieldType={FormFieldType.INPUT}
+            control={form.control}
+            name="emergencyContactName"
+            label="Emergency contact name"
+            placeholder="Guardian's name"   
+        />
+        <CustomFormField 
+            fieldType={FormFieldType.PHONE_INPUT}
+            control={form.control}
+            name="emergencyContactNumber"
+            label="Emergency contact number"
+            placeholder="+963 932 456 789"
+        />
+      </div>
+
+
+
+      <section className="space-y-6">
+        <div className="mb-9 space-y-1">
+            <h2 className="sub-header">Medical Information</h2>
+        </div>
+      </section>
+
+      <CustomFormField 
+            fieldType={FormFieldType.SELECT}
+            control={form.control}
+            name="primaryPhysician"
+            label="Primary Physician"
+            placeholder="Select a physician"
+      >
+        {Doctors.map((doctor, i) => (
+          <SelectItem key={doctor.name + i} value= {doctor.name} >
+            <div className="flex cursor-pointer items-center gap-2">
+              <Image    
+              src={doctor.image}
+              width={32}
+              height={32}
+              alt="doctor"
+              className="rounded-full border border-dark-500"
+              />
+              <p>{doctor.name}</p>
+            </div>
+          </SelectItem>
+        ))}
+      </CustomFormField>
+
+      <div className="flex flex-col gap-6 xl:flex-row">
+        <CustomFormField 
+            fieldType={FormFieldType.INPUT}
+            control={form.control}
+            name="insuranceProvider"
+            label="Insurance Provider"
+            placeholder="Ex: GlobMed"
+        />
+        </div>
+
+      <div className="flex flex-col gap-6 xl:flex-row">
+        <CustomFormField 
+            fieldType={FormFieldType.INPUT}
+            control={form.control}
+            name="insurancePolicyNumber"
+            label="Insurance Policy Number"
+            placeholder="Ex: A1234567BC"
+        />
+        </div>
+
+        <div className="flex flex-col gap-6 xl:flex-row">
+        <CustomFormField 
+            fieldType={FormFieldType.TEXTAREA}
+            control={form.control}
+            name="allergies"
+            label="Allergiesr (if any)"
+            placeholder="Ex: pollen, perfume"
+        />
+        </div>
+
+      <div className="flex flex-col gap-6 xl:flex-row">
+        <CustomFormField 
+            fieldType={FormFieldType.TEXTAREA}
+            control={form.control}
+            name="currentMedication"
+            label="Current Medication (if any)"
+            placeholder="Ex: Aspirin 81 mg"
+        />
+        </div>
+
+        <div className="flex flex-col gap-6 xl:flex-row">
+        <CustomFormField 
+            fieldType={FormFieldType.TEXTAREA}
+            control={form.control}
+            name="familyMedicalHistory"
+            label="Family Medical History"
+            placeholder="Ex: diabetes"
+        />
+        </div>
+
+      <div className="flex flex-col gap-6 xl:flex-row">
+        <CustomFormField 
+            fieldType={FormFieldType.TEXTAREA}
+            control={form.control}
+            name="pastMedicalHistory"
+            label="Past Medical History"
+            placeholder="Ex: Appendectomy, Tonsillectomy"
+        />
+        </div>
+
+        <section className="space-y-6">
+        <div className="mb-9 space-y-1">
+            <h2 className="sub-header">Identification and Verification</h2>
+        </div>
+      </section>
+
+      <CustomFormField 
+            fieldType={FormFieldType.SELECT}
+            control={form.control}
+            name="identificationType"
+            label="Identification Type"
+            placeholder="Select an identification type"
+      >
+        {IdentificationTypes.map((type) => (
+          <SelectItem key={type} value={type}>
+            {type}
+          </SelectItem>
+        ))}
+      </CustomFormField>
+
+        <CustomFormField 
+            fieldType={FormFieldType.INPUT}
+            control={form.control}
+            name="identificationNumber"
+            label="Identification Number"
+            placeholder="Ex: 112345678"
+        />
+
+          <CustomFormField 
+            fieldType={FormFieldType.SKELETON}
+            control={form.control}
+            name="identificationDocument"
+            label="Scanned copy of identification document"
+            renderSkeleton={(field) => (
+              <FormControl>
+                <FileUploader files={field.value} onChange={field.onChange} />
+              </FormControl>
+            )}
+            
+        />
+
+    <section className="space-y-6">
+        <div className="mb-9 space-y-1">
+            <h2 className="sub-header">Consent and Privacy</h2>
+        </div>
+      </section>
+   
+
 
       <div className="flex flex-col gap-6 xl:flex-row">
         

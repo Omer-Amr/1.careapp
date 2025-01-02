@@ -17,7 +17,8 @@ import PhoneInput from 'react-phone-number-input'
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
+import { Select, SelectContent, SelectTrigger, SelectValue } from "./ui/select"
+import { Textarea } from "./ui/textarea";
 
 type E164Number = string
 
@@ -43,7 +44,7 @@ const {fieldType, iconSrc, iconAlt, placeholder, showTimeSelect, dateFormat, ren
     switch (fieldType) {
         case FormFieldType.INPUT:
             return (
-                <div className="flex rounded-md border border-lime-800 bg-lime-800">
+                <div className="flex rounded-md border border-lime-800 bg-dark-400">
                     {iconSrc && (
                         <Image 
                             src={iconSrc}
@@ -63,6 +64,17 @@ const {fieldType, iconSrc, iconAlt, placeholder, showTimeSelect, dateFormat, ren
                     </FormControl>
                 </div>
             )
+        case FormFieldType.TEXTAREA:
+          return (
+            <FormControl>
+              <Textarea 
+                placeholder={placeholder}
+                {...field}
+                className="shad-textarea border-lime-800 bg-dark-400"
+                disabled={props.disabled}
+              />
+            </FormControl>
+          )
         case FormFieldType.PHONE_INPUT:
             return (
                 <FormControl>
@@ -80,7 +92,7 @@ const {fieldType, iconSrc, iconAlt, placeholder, showTimeSelect, dateFormat, ren
 
         case FormFieldType.DATE_PICKER:
           return (
-            <div className="flex rounded-md border border-lime-800 bg-lime-800">
+            <div className="flex rounded-md border border-lime-800 bg-dark-400">
               <Image
                 src="/assets/icons/calendar.svg"
                 height={24}
@@ -103,12 +115,29 @@ const {fieldType, iconSrc, iconAlt, placeholder, showTimeSelect, dateFormat, ren
 
             </div>
           )
+
+        case FormFieldType.SELECT:
+          return (
+            <FormControl>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger className="shad-select-trigger">
+                    <SelectValue placeholder={placeholder}/>
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent className="shad-select-content">
+                  {props.children}
+                </SelectContent>
+              </Select>
+            </FormControl>
+          )
+
         case FormFieldType.SKELETON:
           return renderSkeleton ? renderSkeleton(field) : null;
           default:
             return null;
           
-                  
+
          
               
     }
